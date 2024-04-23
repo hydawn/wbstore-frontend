@@ -1,11 +1,35 @@
 import { useState } from "react";
+import axios from "axios";
 
-function LoginWindow() {
+interface Props {
+  setOnPage: Function
+}
+
+
+function LoginWindow({setOnPage}: Props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  function submitLogin() {
+  // const submitLogin = async () => {
+  const submitLogin = async () => {
     console.log(`submit login username: [${username}] password: [${password}]`);
+    // try {
+    //   const resp = await axios.post('/api/login', {username: username, password: password});
+    //   console.log('Login good:', resp);
+    //   setIsLoggedIn(true);
+    // } catch (error) {
+    //   console.error('Login failed:', error);
+    // }
+    axios.post(
+      '/api/login/', {username: username, password: password}
+    )
+    .then(function (resp) {
+      console.log('good:', resp)
+      setOnPage('home');
+    })
+    .catch(function (resp) {
+      console.log('error:', resp)
+    })
   }
 
   return (
@@ -38,7 +62,7 @@ function SignupWindow() {
   );
 }
 
-export default function LoginSignupPage() {
+export default function LoginSignupPage({setOnPage}: Props) {
   const [atLogin, setAtLogin] = useState(true);
 
   function ChoseLoginSignup() {
@@ -53,7 +77,7 @@ export default function LoginSignupPage() {
   return (
     <>
       <ChoseLoginSignup />
-      {atLogin ? <LoginWindow /> : <SignupWindow />}
+      {atLogin ? <LoginWindow setOnPage={setOnPage} /> : <SignupWindow />}
     </>
   );
 }
