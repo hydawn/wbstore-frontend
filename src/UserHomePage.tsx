@@ -10,7 +10,7 @@ const UserHomePage = () => {
     const fetchUserName = async () => {
       try {
         // Make a GET request to the API endpoint
-        const response = await axios.get('/api/get_user_detail/');
+        const response = await axios.get('/api/get_user_detail');
         // Assuming the response data contains the user name
         // Update the state with the fetched user name
         setUserName(response.data.username);

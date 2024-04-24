@@ -21,7 +21,7 @@ function LoginWindow({setOnPage}: Props) {
     //   console.error('Login failed:', error);
     // }
     axios.post(
-      '/api/login/', {username: username, password: password}
+      '/api/login', {username: username, password: password}
     )
     .then(function (resp) {
       console.log('good:', resp)

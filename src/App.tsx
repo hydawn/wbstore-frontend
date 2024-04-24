@@ -8,7 +8,7 @@ const debug_host = ''
 
 function checkUserLogin(setOnPage: Function) {
   axios.get(
-    debug_host + '/api/get_user_loggedin/'
+    debug_host + '/api/get_user_loggedin'
   ).then(resp => {
     console.log('got resp:', resp)
     if (resp.data.loggedin) {
