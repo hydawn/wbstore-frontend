@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import axios from "axios";
 
 interface LoginProps {
-  setOnPage: Function
+  setLoginStatus: Function
 }
 
-function LoginWindow({setOnPage}: LoginProps) {
+function LoginWindow({setLoginStatus}: LoginProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,7 +17,7 @@ function LoginWindow({setOnPage}: LoginProps) {
     )
     .then(function (resp) {
       console.log('good:', resp)
-      setOnPage('home');
+      setLoginStatus(true);
     })
     .catch(function (resp) {
       console.log('signup error: ', resp);
@@ -79,7 +79,7 @@ function SignupWindow() {
   );
 }
 
-export default function LoginSignupPage({setOnPage}: LoginProps) {
+export default function LoginSignupPage({setLoginStatus}: LoginProps) {
   const [atLogin, setAtLogin] = useState(true);
 
   function ChoseLoginSignup() {
@@ -95,7 +95,7 @@ export default function LoginSignupPage({setOnPage}: LoginProps) {
     <>
       <ChoseLoginSignup />
       {atLogin ?
-      <LoginWindow setOnPage={setOnPage} /> :
+      <LoginWindow setLoginStatus={setLoginStatus} /> :
       <SignupWindow />}
     </>
   );
