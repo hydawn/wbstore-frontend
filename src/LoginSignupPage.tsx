@@ -1,26 +1,18 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 
-interface Props {
+interface LoginProps {
   setOnPage: Function
 }
 
-
-function LoginWindow({setOnPage}: Props) {
+function LoginWindow({setOnPage}: LoginProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   // const submitLogin = async () => {
   const submitLogin = async () => {
     console.log(`submit login username: [${username}] password: [${password}]`);
-    // try {
-    //   const resp = await axios.post('/api/login', {username: username, password: password});
-    //   console.log('Login good:', resp);
-    //   setIsLoggedIn(true);
-    // } catch (error) {
-    //   console.error('Login failed:', error);
-    // }
-    axios.post(
+    await axios.post(
       '/api/login', {username: username, password: password}
     )
     .then(function (resp) {
@@ -28,48 +20,73 @@ function LoginWindow({setOnPage}: Props) {
       setOnPage('home');
     })
     .catch(function (resp) {
-      console.log('error:', resp)
+      console.log('signup error: ', resp);
+      alert('signup error: ' + resp.response.data.error);
     })
   }
 
   return (
     <>
     用户名：
-    <input type="text" onChange={(e) => setUsername(e.target.value)}/>
+    <input type="text" onBlur={(e) => setUsername(e.target.value)}/>
     密码：
-    <input type="password" onChange={(e) => setPassword(e.target.value)}/>
+    <input type="password" onBlur={(e) => setPassword(e.target.value)}/>
     <button onClick={submitLogin}>登录</button>
     </>
   );
 }
 
 function SignupWindow() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
-  function submitSignup() {
-    console.log(`hit signup username: [${username}] password: [${password}]`);
+  // const [signupSuccess, setSignupSuccess] = useState(false);
+
+  const submitSignup = async () => {
+    const username = usernameRef.current?.value || '';
+    const password = passwordRef.current?.value || '';
+    const email = emailRef.current?.value || '';
+    console.log(`hit signup username: [${username}] password: [${password}] email: [${email}]`);
+    await axios.post(
+      '/api/signup', {username: username, password: password, email: email}
+    )
+    .then((resp) => {
+      console.log('signup success:', resp);
+      // setOnPage('home');
+      alert('signup success')
+      //setSignupSuccess(true);
+      // setAtLogin(true);
+    })
+    .catch((resp) => {
+      console.log('submit signup error:', resp);
+      alert('signup error: ' + resp.response.data.error)
+    })
   }
 
+  console.log('load signup window')
+
   return (
-    <>
-    用户名：
-    <input type="text" onChange={(e) => setUsername(e.target.value)}/>
-    密码：
-    <input type="password" onChange={(e) => setPassword(e.target.value)}/>
-    <button onClick={submitSignup}>注册</button>
-    </>
+      <>
+      用户名：
+      <input type="text" ref={usernameRef}/>
+      邮箱：
+      <input type="text" ref={emailRef}/>
+      密码：
+      <input type="password" ref={passwordRef}/>
+      <button onClick={submitSignup}>注册</button>
+      </>
   );
 }
 
-export default function LoginSignupPage({setOnPage}: Props) {
+export default function LoginSignupPage({setOnPage}: LoginProps) {
   const [atLogin, setAtLogin] = useState(true);
 
   function ChoseLoginSignup() {
     return (
       <>
-        <button onClick={() => setAtLogin(true)}>登录</button>
-        <button onClick={() => setAtLogin(false)}>注册</button>
+        <button className="btn" onClick={() => setAtLogin(true)}>登录</button>
+        <button className="btn" onClick={() => setAtLogin(false)}>注册</button>
       </>
     );
   }
@@ -77,7 +94,9 @@ export default function LoginSignupPage({setOnPage}: Props) {
   return (
     <>
       <ChoseLoginSignup />
-      {atLogin ? <LoginWindow setOnPage={setOnPage} /> : <SignupWindow />}
+      {atLogin ?
+      <LoginWindow setOnPage={setOnPage} /> :
+      <SignupWindow />}
     </>
   );
 }
