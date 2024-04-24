@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UserHomePage = () => {
+interface Props {
+  setOnPage: Function
+}
+
+const UserHomePage = ({setOnPage}: Props) => {
   // Define state to store the user name
   const [userName, setUserName] = useState('');
 
@@ -15,7 +19,6 @@ const UserHomePage = () => {
         // Update the state with the fetched user name
         setUserName(response.data.username);
       } catch (error) {
-        // Handle any errors
         console.error('Error fetching user name:', error);
       }
     };
@@ -27,9 +30,22 @@ const UserHomePage = () => {
 
   }, []); // Empty dependency array ensures the effect runs only once after the initial render
 
+  const handleLogout = async () => {
+    await axios.post('/api/logout')
+    .then((resp) => {
+      console.log('user logout!')
+      alert('logout, try to reload')
+      setOnPage('login')
+    })
+    .catch((resp) => {
+      console.error('logout error: ', resp);
+    });
+  };
+
   return (
     <div>
-      <h1>User Name: {userName}</h1>
+      <h1>用户名：{userName}</h1>
+      <button className="btn btn-primary" onClick={handleLogout}>登出</button>
     </div>
   );
 };

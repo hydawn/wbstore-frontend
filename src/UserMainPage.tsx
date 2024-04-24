@@ -10,7 +10,7 @@ function UserMainPage({ onPage, setOnPage }: Props) {
   return (
   <>
     {onPage === 'login' ? <LoginSignupPage setOnPage={setOnPage} /> : null}
-    {onPage === 'home' ? <UserHomePage /> : null}
+    {onPage === 'home' ? <UserHomePage setOnPage={setOnPage} /> : null}
     {onPage === 'books' ? 'books page' : null}
     {onPage === 'shopping cart' ? 'shopping cart page' : null}
     {onPage === 'orders' ? 'orders page' : null}
