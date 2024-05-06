@@ -3,9 +3,10 @@ import axios from "axios";
 
 interface LoginProps {
   setLoginStatus: Function
+  setLoginRole: Function
 }
 
-function LoginWindow({setLoginStatus}: LoginProps) {
+function LoginWindow({setLoginStatus, setLoginRole}: LoginProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,6 +19,7 @@ function LoginWindow({setLoginStatus}: LoginProps) {
     .then(function (resp) {
       console.log('good:', resp)
       setLoginStatus(true);
+      setLoginRole(resp.data.role);
     })
     .catch(function (resp) {
       console.log('signup error: ', resp);
@@ -41,15 +43,21 @@ function SignupWindow() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
-  // const [signupSuccess, setSignupSuccess] = useState(false);
+  let role = 'customer';
+  function setRole(giveRole: string) {
+    role = giveRole;
+  };
+
+  // const [role, setRole] = useState('customer');
 
   const submitSignup = async () => {
     const username = usernameRef.current?.value || '';
     const password = passwordRef.current?.value || '';
     const email = emailRef.current?.value || '';
-    console.log(`hit signup username: [${username}] password: [${password}] email: [${email}]`);
+    console.log(`hit signup username: [${username}] email: [${email}]`);
     await axios.post(
-      '/api/signup', {username: username, password: password, email: email}
+      '/api/signup',
+      {username: username, password: password, email: email, role: role}
     )
     .then((resp) => {
       console.log('signup success:', resp);
@@ -70,6 +78,14 @@ function SignupWindow() {
       <>
       用户名：
       <input type="text" ref={usernameRef}/>
+      <div className="form-check">
+      <input className="form-check-input" type="checkbox" value="customer" id="checkDefault" checked onClick={() => { setRole('customer'); }} />
+      <label className="form-check-label" htmlFor="checkDefault">customer</label>
+      </div>
+      <div className="form-check">
+      <input className="form-check-input" type="checkbox" value="merchant" id="checkDefault" onClick={() => { setRole('merchant'); }} />
+      <label className="form-check-label" htmlFor="checkDefault">merchant</label>
+      </div>
       邮箱：
       <input type="text" ref={emailRef}/>
       密码：
@@ -79,7 +95,7 @@ function SignupWindow() {
   );
 }
 
-export default function LoginSignupPage({setLoginStatus}: LoginProps) {
+export default function LoginSignupPage({setLoginStatus, setLoginRole}: LoginProps) {
   const [atLogin, setAtLogin] = useState(true);
 
   function ChoseLoginSignup() {
@@ -95,7 +111,7 @@ export default function LoginSignupPage({setLoginStatus}: LoginProps) {
     <>
       <ChoseLoginSignup />
       {atLogin ?
-      <LoginWindow setLoginStatus={setLoginStatus} /> :
+      <LoginWindow setLoginStatus={setLoginStatus} setLoginRole={setLoginRole} /> :
       <SignupWindow />}
     </>
   );

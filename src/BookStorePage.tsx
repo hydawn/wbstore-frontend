@@ -1,6 +1,9 @@
+import axios from "axios";
 
-// maybe I should route anyways, I must route to another site to place and take
-// orders
-// or must I?
+function getAllBooks(page: number, per_page: number) {
+}
+
 export default function BookStorePage() {
+  // get all books
+  return <></>;
 }

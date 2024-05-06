@@ -15,10 +15,11 @@ function SideBar({ onPage, setOnPage, sideBarNames }: Props) {
   return (
   <>
     {
-    sideBarNames.map(name => {
+    sideBarNames.map((name, index) => {
       return (
       <div className="btn-group" role="main-side-bar" aria-label="just-main-sidebar">
         <button
+        key={index}
         type="button"
         className={'btn btn-primary' + (onPage === name && ' active')}
         onClick={() => handleClick(name)}>

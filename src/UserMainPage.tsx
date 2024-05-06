@@ -1,4 +1,5 @@
 import UserHomePage from './UserHomePage.tsx'
+import BookStorePage from './BookStorePage.tsx'
 
 interface Props {
   onPage: string,
@@ -10,8 +11,8 @@ interface Props {
 function UserMainPage({ onPage, setOnPage, loginStatus, setLoginStatus }: Props) {
   return (
   <>
-    {onPage === 'home' ? <UserHomePage setOnPage={setOnPage} loginStatus={loginStatus} setLoginStatus={setLoginStatus} /> : null}
-    {onPage === 'books' ? 'books page' : null}
+    {onPage === 'home' ? <UserHomePage setLoginStatus={setLoginStatus} /> : null}
+    {onPage === 'books' ? <BookStorePage /> : null}
     {onPage === 'shopping cart' ? 'shopping cart page' : null}
     {onPage === 'orders' ? 'orders page' : null}
   </>
