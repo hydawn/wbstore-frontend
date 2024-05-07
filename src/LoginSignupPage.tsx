@@ -33,7 +33,7 @@ function LoginWindow({setLoginStatus, setLoginRole}: LoginProps) {
     <input type="text" onBlur={(e) => setUsername(e.target.value)}/>
     密码：
     <input type="password" onBlur={(e) => setPassword(e.target.value)}/>
-    <button onClick={submitLogin}>登录</button>
+    <button className="btn" onClick={submitLogin}>登录</button>
     </>
   );
 }
@@ -90,7 +90,7 @@ function SignupWindow() {
       <input type="text" ref={emailRef}/>
       密码：
       <input type="password" ref={passwordRef}/>
-      <button onClick={submitSignup}>注册</button>
+      <button className="btn" onClick={submitSignup}>注册</button>
       </>
   );
 }
