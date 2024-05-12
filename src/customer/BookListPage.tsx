@@ -1,10 +1,38 @@
 import { useState, useEffect } from 'react';
 import { BookInfo } from '../types/BookTypes.tsx';
 import LoadingPage from '../LoadingPage.tsx';
+import BookLongView from '../views/BookLongView.tsx';
 
 interface BookListPageProp {
   setBookId: Function,
   getBooks: Function
+}
+
+interface PresentBookInfoProp {
+  bookInfo: BookInfo
+  setBookId: Function
+};
+
+function PresentBookInfo({bookInfo, setBookId}: PresentBookInfoProp) {
+  function MoreDetailButton() {
+    return <button className="btn" onClick={() => {
+      setBookId(bookInfo.id);
+    }}>更多</button>;
+  }
+  return (<>
+    <BookLongView bookInfo={bookInfo} />
+    <MoreDetailButton />
+  </>);
+}
+
+interface BookListRowProp {
+  data: BookInfo
+  index: number
+  setBookId: Function
+};
+
+function BookListRow({data, index, setBookId}: BookListRowProp) {
+  return <li key={index}><PresentBookInfo bookInfo={data} setBookId={setBookId} /></li>
 }
 
 export default function BookListPage({ setBookId, getBooks }: BookListPageProp) {
@@ -13,49 +41,13 @@ export default function BookListPage({ setBookId, getBooks }: BookListPageProp) 
 
   useEffect(() => {getBooks(setBookInfoList, bookPage, 10)}, []);
 
-  interface PresentBookInfoProp {
-    bookInfo: BookInfo
-  };
-
-  function PresentBookInfo({bookInfo}: PresentBookInfoProp) {
-    function BookPicture() {
-      // TODO: jpeg? -- I need an image type
-      const base64Image = `data:image/jpeg;base64,${bookInfo.image_description}`;
-      return <img src={base64Image} alt={bookInfo.name}/>
-    }
-    function BookTextDetail() {
-      return (<>
-        <b>{bookInfo.name}</b>
-        <b>${bookInfo.price}$</b>
-        {bookInfo.online_date}
-        {bookInfo.text_description}
-      </>);
-    }
-    function MoreDetailButton() {
-      return <button className="btn" onClick={() => {
-        setBookId(bookInfo.id);
-      }}>更多</button>;
-    }
-    return (<>
-      <BookPicture />
-      <BookTextDetail />
-      <MoreDetailButton />
-    </>);
-  }
-
-  interface BookListRowProp {
-    data: BookInfo,
-    index: number
-  };
-
-  function BookListRow({data, index}: BookListRowProp) {
-    return <li key={index}><PresentBookInfo bookInfo={data} /></li>
-  }
 
   interface Prop { bookInfoList: Array<BookInfo> }
 
   function BookList({bookInfoList}: Prop) {
-    return (<ul>{bookInfoList.map((i, index) => ( <BookListRow data={i} index={index} /> ))}</ul>);
+    return (<ul>{
+      bookInfoList.map((i, index) => ( <BookListRow data={i} index={index} setBookId={setBookId} /> ))
+    }</ul>);
   }
 
   function BookListNavBar() {
