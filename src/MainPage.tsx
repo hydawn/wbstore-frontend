@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SideBar from './SideBar.tsx';
 import UserMainPage from './UserMainPage.tsx';
-import MerchMainPage from './MerchMainPage.tsx';
+import MerchMainPage from './merchpage/MerchMainPage.tsx';
 
 interface Prop {
   loginStatus: boolean
