@@ -2,13 +2,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BookInfo } from '../types/BookTypes.tsx'
+import LoadingPage from '../LoadingPage.tsx';
 
 interface Prop {
   bookId: string
   setBookId: Function
   setOnPage: Function
   BookActionSection: (props: {
-    bookData: BookInfo | null
+    bookData: BookInfo
     setOnPage: Function
   }) => JSX.Element
 }
@@ -46,7 +47,7 @@ export default function BookDetailPage({ bookId, setBookId, setOnPage, BookActio
   console.log('get book id', bookId);
   return (<>
     <BookDetailInfo bookId={bookId} />
-    <BookActionSection bookData={bookData} setOnPage={setOnPage} />
+    bookData === null ? <LoadingPage /> : <BookActionSection bookData={bookData} setOnPage={setOnPage} />
     <ReturnButton />
   </>);
 }

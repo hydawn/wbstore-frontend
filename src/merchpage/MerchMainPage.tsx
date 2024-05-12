@@ -1,6 +1,7 @@
 import MerchHomePage from "./MerchHomePage.tsx";
 import BookStorePage from "./BookStorePage.tsx";
 import OrdersPage from "./OrdersPage.tsx";
+import AddBookPage from "./AddBookPage.tsx";
 
 interface Props {
   onPage: string,
@@ -14,6 +15,7 @@ export default function MerchMainPage({ onPage, setOnPage, loginStatus, setLogin
   <>
     {onPage === 'home' ? <MerchHomePage setLoginStatus={setLoginStatus} /> : null}
     {onPage === 'books' ? <BookStorePage /> : null}
+    {onPage === 'add books' ? <AddBookPage /> : null}
     {onPage === 'orders' ? <OrdersPage /> : null}
   </>
   );

@@ -3,7 +3,7 @@ import axios from "axios";
 import { BookInfo } from '../types/BookTypes.tsx'
 
 interface BookOrderFormProp {
-  bookData: BookInfo | null
+  bookData: BookInfo
   setOnPage: Function
 }
 
@@ -33,15 +33,6 @@ function postOrderBook(bookData: BookInfo, merchandiseCount: number, setOnPage: 
 export default function BookOrderForm({ bookData, setOnPage }: BookOrderFormProp) {
   let merchandiseCount = 1;
 
-  function orderBook() {
-    if (bookData === null) {
-      console.log(`can't order with null bookData`);
-      alert(`can't order with null bookData`);
-      return;
-    }
-    postOrderBook(bookData, merchandiseCount, setOnPage);
-  }
-
   function NumberInput() {
     const [num, setNum] = useState(1);
     function moreInput() {
@@ -65,6 +56,6 @@ export default function BookOrderForm({ bookData, setOnPage }: BookOrderFormProp
 
   return (<>
     <NumberInput />
-    <button className="btn" onClick={() => {orderBook()}}>购买</button>
+    <button className="btn" onClick={() => {postOrderBook(bookData, merchandiseCount, setOnPage)}}>购买</button>
   </>);
 }

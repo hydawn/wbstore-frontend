@@ -19,7 +19,7 @@ function MainPage({loginStatus, loginRole, setLoginStatus}: Prop) {
   };
 
   const userSideBarNames = ['home', 'books', 'shopping cart', 'orders'];
-  const merchSideBarNames = ['home', 'books', 'orders'];
+  const merchSideBarNames = ['home', 'books', 'add books', 'orders'];
   function UserPage() {
     return (<>
       <SideBar onPage={onPage} setOnPage={setOnPageStack} sideBarNames={userSideBarNames} />

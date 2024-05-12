@@ -1,12 +1,21 @@
-import { BookInfo } from "../types/BookTypes"
+import { BookInfo } from "../types/BookTypes";
+import axios from 'axios';
 
 interface Prop {
-  bookData: BookInfo | null
+  bookData: BookInfo
   setOnPage: Function
+}
+
+function removeBook(bookData: BookInfo, onRemove: Function) {
+  console.log(`removing book ${bookData.name} of id [${bookData.id}]`);
+  // TODO: remove book here
+  axios.post('/api/remove_book', {id: bookData.id}).then(resp => {onRemove()});
 }
 
 // for merchant
 export default function BookAction({bookData, setOnPage}: Prop) {
-  // take, accept cancel, accept finish
-  return (<>for book {bookData?.id} <button className="btn btn-primary" onClick={() => {console.log('hit to take')}}>Take</button></>);
+  function RemoveButton() {
+    return <button className="btn btn-primary" onClick={() => {removeBook(bookData, () => {setOnPage('books')} )}}>Remove</button>;
+  }
+  return (<><RemoveButton /></>);
 }
