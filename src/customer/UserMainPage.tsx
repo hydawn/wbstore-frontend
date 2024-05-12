@@ -10,16 +10,12 @@ interface Props {
 }
 
 function UserMainPage({ onPage, setOnPage, loginStatus, setLoginStatus }: Props) {
-  let focusOrderId = '';
-  const setFocusOrderId = (newFocusOrderId: string) => {
-    focusOrderId = newFocusOrderId;
-  };
   return (
   <>
     {onPage === 'home' ? <UserHomePage setLoginStatus={setLoginStatus} /> : null}
     {onPage === 'books' ? <BookStorePage setOnPage={setOnPage} /> : null}
     {onPage === 'shopping cart' ? 'shopping cart page' : null}
-    {onPage === 'orders' ? <OrdersPage focusOrderId={focusOrderId} setFocusOrderId={setFocusOrderId} />: null}
+    {onPage === 'orders' ? <OrdersPage />: null}
   </>
   );
 }

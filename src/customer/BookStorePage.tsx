@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import BookListPage from './BookListPage';
 import BookDetailPage from './BookDetailPage';
-import { getAllBooks } from './query/QueryBooks';
+import { getAllBooks } from '../query/QueryBooks';
 
 interface Prop {
   setOnPage: Function

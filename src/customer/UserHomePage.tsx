@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import LogoutButton from './LogoutButton';
+import LogoutButton from '../LogoutButton';
 import axios from 'axios';
 
 interface Props {

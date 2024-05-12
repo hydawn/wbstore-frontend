@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from 'axios';
 
-import LoadingPage from './LoadingPage';
+import LoadingPage from '../LoadingPage';
 
 interface OrderInfo {
   id: string,

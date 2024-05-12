@@ -1,7 +1,7 @@
 // fetch detail info from web and present it
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BookInfo } from './types/BookTypes.tsx'
+import { BookInfo } from '../types/BookTypes.tsx'
 
 interface Prop {
   bookId: string

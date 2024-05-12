@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { BookInfo } from './types/BookTypes.tsx';
-import LoadingPage from './LoadingPage.tsx';
+import { BookInfo } from '../types/BookTypes.tsx';
+import LoadingPage from '../LoadingPage.tsx';
 
 interface BookListPageProp {
   setBookId: Function,
