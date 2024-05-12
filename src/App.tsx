@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import LoginSignupPage from './LoginSignupPage.tsx';
 import MainPage from './MainPage.tsx';
+import LoadingPage from './LoadingPage.tsx';
 
 function checkUserLogin(setLoginStatus: Function, setLoginRole: Function) {
   axios.get(
@@ -26,17 +27,19 @@ function checkUserLogin(setLoginStatus: Function, setLoginRole: Function) {
 
 function App() {
   const [loginRole, setLoginRole] = useState('customer');
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [loginStatus, setLoginStatus] = useState<boolean | null>(null);
 
   useEffect(() => {
     checkUserLogin(setLoginStatus, setLoginRole);
   }, []);
 
-  return (<>{
-    loginStatus ?
-    <MainPage loginStatus={loginStatus} loginRole={loginRole} setLoginStatus={setLoginStatus} /> :
-    <LoginSignupPage setLoginStatus={setLoginStatus} setLoginRole={setLoginRole} />
-  }</>);
+  if (loginStatus === null) {
+    return <LoadingPage />;
+  } else if (loginStatus) {
+    return <MainPage loginStatus={loginStatus} loginRole={loginRole} setLoginStatus={setLoginStatus} />;
+  } else {
+    return <LoginSignupPage setLoginStatus={setLoginStatus} setLoginRole={setLoginRole} />;
+  }
 };
 
 export default App;
