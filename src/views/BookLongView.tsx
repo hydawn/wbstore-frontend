@@ -6,7 +6,6 @@ interface Prop {
 
 export default function BookLongView({bookInfo}: Prop) {
   function BookPicture() {
-    // TODO: jpeg? -- I need an image type
     const base64Image = `data:${bookInfo.image_type};base64,${bookInfo.image_description}`;
     return <img src={base64Image} alt={bookInfo.name}/>
   }
