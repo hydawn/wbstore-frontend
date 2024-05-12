@@ -76,6 +76,8 @@ export default function BookDetailPage({ bookId, setBookId, setOnPage }: Prop) {
         setNum(num + 1);
       }
       function lessInput() {
+        if (num === 1)
+          return;
         merchandiseCount = num - 1;
         setNum(num - 1);
       }
