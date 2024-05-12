@@ -5,8 +5,8 @@ import LoginSignupPage from './LoginSignupPage.tsx';
 import MainPage from './MainPage.tsx';
 import LoadingPage from './LoadingPage.tsx';
 
-function checkUserLogin(setLoginStatus: Function, setLoginRole: Function) {
-  axios.get(
+async function checkUserLogin(setLoginStatus: Function, setLoginRole: Function) {
+  await axios.get(
     '/api/get_user_loggedin'
   ).then(resp => {
     console.log('got resp:', resp)
