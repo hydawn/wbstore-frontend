@@ -3,13 +3,16 @@
 interface Prop {
   bookId: string
   setBookId: Function
-  setPageState: Function
+  setOnPage: Function
 }
 
-export default function BookDetailPage({bookId, setBookId, setPageState}: Prop) {
-  // fetch book info
+export default function BookDetailPage({ bookId, setBookId, setOnPage }: Prop) {
+  function ReturnButton() {
+    return <button className="btn" onClick={() => {setBookId('')}}>返回</button>;
+  }
+
   return (<>
       this is a more detail page for book with bookid of {bookId}
-      <button className="btn" onClick={() => {setPageState('book list')}}>hit to return to list</button>
+      <ReturnButton />
   </>);
 }
