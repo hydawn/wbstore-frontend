@@ -1,40 +1,17 @@
 import { useState, useEffect } from 'react';
-import axios from "axios";
-
-interface BookInfo {
-  id: string,
-  name: string,
-  text_description: string,
-  image_description: string,
-  price: number,
-  online_date: string,
-  stock_inventory: number,
-  added_by_user: number
-}
-
-function getAllBooks(setBookInfoList: Function, page_number: number, per_page: number) {
-  axios.get(
-    '/api/search_merchandise',
-    { params: {merchandise_name: '.*', per_page: per_page, page_number: page_number} }
-  ).then(resp => {
-    console.log('got /api/search_merchandise: ', resp);
-    setBookInfoList(resp.data.data as Array<BookInfo>);
-  }).catch(resp => {
-    console.error('/api/search_merchandise error:', resp)
-  })
-}
+import { BookInfo } from './types/BookTypes.tsx';
+import LoadingPage from './LoadingPage.tsx';
 
 interface BookListPageProp {
-  setOnPage: Function
-  setBookId: Function
-  setBookPageState: Function
+  setBookId: Function,
+  getBooks: Function
 }
 
-export default function BookListPage({setOnPage, setBookId, setBookPageState }: BookListPageProp) {
+export default function BookListPage({ setBookId, getBooks }: BookListPageProp) {
   const [bookInfoList, setBookInfoList] = useState<Array<BookInfo> | null>(null);
   const [bookPage, setBookPage] = useState(1);
 
-  useEffect(() => {getAllBooks(setBookInfoList, bookPage, 10)}, []);
+  useEffect(() => {getBooks(setBookInfoList, bookPage, 10)}, []);
 
   interface PresentBookInfoProp {
     bookInfo: BookInfo
@@ -57,7 +34,6 @@ export default function BookListPage({setOnPage, setBookId, setBookPageState }: 
     function MoreDetailButton() {
       return <button className="btn" onClick={() => {
         setBookId(bookInfo.id);
-        setBookPageState('book detail');
       }}>更多</button>;
     }
     return (<>
@@ -84,8 +60,8 @@ export default function BookListPage({setOnPage, setBookId, setBookPageState }: 
 
   function BookListNavBar() {
     return (<>
-      <button className="btn" onClick={() => setBookPage(bookPage + 1)}>下一页</button>
-      <button className="btn" onClick={() => setBookPage(bookPage - 1)}>上一页</button>
+      <button className="btn btn-primary" onClick={() => {setBookPage(bookPage - 1)}}>上一页</button>
+      <button className="btn btn-primary" onClick={() => {setBookPage(bookPage + 1)}}>下一页</button>
     </>);
   }
 
@@ -99,6 +75,6 @@ export default function BookListPage({setOnPage, setBookId, setBookPageState }: 
   }
 
   return (<>
-    {bookInfoList ? <DrawBookStorePage bookInfoList={bookInfoList} /> : <div>Loading...</div>}
+    {bookInfoList ? <DrawBookStorePage bookInfoList={bookInfoList} /> : <LoadingPage />}
   </>);
 }
