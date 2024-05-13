@@ -1,3 +1,3 @@
 export default function OrdersPage() {
-  return <>orders page</>;
+  return <>list orders page</>;
 }
