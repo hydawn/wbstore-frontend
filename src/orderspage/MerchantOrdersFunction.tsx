@@ -47,7 +47,7 @@ export async function getMerchantOrders(setOrderInfoDataList: Function, page_num
     {params: {page_number: page_number, per_page: per_page}}
   ).then(resp => {
     console.log('got orders', resp.data)
-    setOrderInfoDataList(resp.data.data as Array<OrderInfo>);
+    setOrderInfoDataList(resp.data.data.order_list as Array<OrderInfo>);
   }).catch(resp => {
     console.error('failed to get order:', resp)
   });

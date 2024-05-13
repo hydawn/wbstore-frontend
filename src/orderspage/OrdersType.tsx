@@ -10,6 +10,7 @@ interface OrderInfo {
   status_taken: boolean
   status_cancelling: boolean
   status_end: string
+  status_incart: boolean
   added_date: string
 }
 
