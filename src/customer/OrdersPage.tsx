@@ -158,12 +158,13 @@ function SelectOrderPage({setFocusOrderId}: SelectOrderPageProp) {
     return <LoadingPage />;
   } else {
     // BUG: why is it possibly undefined?
-    return <ul> {orderInfoDataList?.map( (orderInfoData, index) => {
+    return <ul>{orderInfoDataList?.map((orderInfoData, index) => {
       return (
         <li key={index}>
         <OrderInfoDisplay orderInfoData={orderInfoData} />
         <button className="btn btn-primary" onClick={() => { setFocusOrderId(orderInfoData.id) }}>更多</button>
-        </li>);
+        </li>
+      );
     })}</ul>;
   }
 }
