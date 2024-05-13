@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-interface OrderInfoProp {
-  orderInfoData: OrderInfo,
-  onOrderChange: Function
-}
-
-export default function CustomerOrderActions({orderInfoData, onOrderChange}: OrderInfoProp) {
+export default function CustomerOrderActions({orderInfoData, onOrderChange}: OrderActionsProp) {
   async function cancelOrder() {
     console.log(`cancel order ${orderInfoData.id}`)
     await axios.post(
