@@ -30,14 +30,14 @@ export default function CustomerOrderActions({orderInfoData, onOrderChange}: Ord
 
   function PayOrder() {
     if (orderInfoData.status_paid)
-      return <button className="btn btn-secondary">已付款</button>;
+      return <button className="btn btn-primary" disabled>已付款</button>;
     else
       return <button className="btn btn-primary" onClick={() => {payOrder()}}>付款</button>;
   }
 
   function CancelOrder() {
     if (orderInfoData.status_cancelling)
-      return <button className="btn btn-secondary" >取消中</button>;
+      return <button className="btn btn-danger" disabled>取消中</button>;
     else
       return <button className="btn btn-danger" onClick={() => {cancelOrder()}}>取消</button>;
   }
