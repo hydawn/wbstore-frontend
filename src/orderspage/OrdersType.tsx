@@ -9,6 +9,7 @@ interface OrderInfo {
   status_paid: boolean
   status_taken: boolean
   status_cancelling: boolean
+  status_end: string
   added_date: string
 }
 

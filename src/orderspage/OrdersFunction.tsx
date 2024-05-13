@@ -24,6 +24,7 @@ function OrderInfoDisplay({orderInfoData}: OrderInfoDisplayProp) {
     paid: {orderInfoData.status_paid ? 'yes' : 'no'},
     taken: {orderInfoData.status_taken ? 'yes' : 'no'},
     cancelling: {orderInfoData.status_cancelling ? 'yes' : 'no'},
+    ending: {orderInfoData.status_end},
     added_date: {orderInfoData.added_date}
   </>);
 }
@@ -71,22 +72,10 @@ export function FocusingOrderPage({orderId, setFocusOrderId, OrderActions}: Focu
 
 interface SelectOrderPageProp {
   setFocusOrderId: Function
+  getOrders: Function
 }
 
-async function getOrders(setOrderInfoDataList: Function, page_number: number, per_page: number) {
-  await axios.get(
-    '/api/search_cutomer_order',
-    {params: {page_number: page_number, per_page: per_page}}
-  ).then(resp => {
-    console.log('got orders', resp.data)
-    setOrderInfoDataList(resp.data.data as Array<OrderInfo>);
-  }).catch(resp => {
-    console.error('failed to get order:', resp)
-  });
-  return [];
-}
-
-export function SelectOrderPage({setFocusOrderId}: SelectOrderPageProp) {
+export function SelectOrderPage({setFocusOrderId, getOrders}: SelectOrderPageProp) {
   const [orderInfoDataList, setOrderInfoDataList] = useState<Array<OrderInfo> | null>();
 
   useEffect(() => {getOrders(setOrderInfoDataList, 1, 10)}, []);
