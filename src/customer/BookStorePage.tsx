@@ -2,7 +2,7 @@ import { useState } from 'react';
 import BookListPage from './BookListPage';
 import BookDetailPage from './BookDetailPage';
 import { getAllBooks } from '../query/QueryBooks';
-import BookOrderForm from '../customer/BookOrderForm';
+import BookActionsUser from '../customer/BookActions';
 
 interface Prop {
   setOnPage: Function
@@ -14,6 +14,6 @@ export default function BookStorePage({setOnPage}: Prop) {
   return (<>
     {bookId === '' ?
     <BookListPage setBookId={setBookId} getBooks={getAllBooks} /> :
-    <BookDetailPage bookId={bookId} setBookId={setBookId} setOnPage={setOnPage} BookActionSection={BookOrderForm} />}
+    <BookDetailPage bookId={bookId} setBookId={setBookId} setOnPage={setOnPage} BookActionSection={BookActionsUser} />}
   </>);
 }
