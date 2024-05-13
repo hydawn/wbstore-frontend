@@ -7,7 +7,7 @@ interface OrderInfoDisplayProp {
   orderInfoData: OrderInfo,
 }
 
-interface OrderIdProp {
+interface FocusingOrderPageProp {
   orderId: string
   setFocusOrderId: Function
   OrderActions: (props: {
@@ -46,7 +46,7 @@ function clearOrderStatus(setFocusOrderId: Function) {
   setFocusOrderId('');
 }
 
-export function FocusingOrderPage({orderId, setFocusOrderId, OrderActions}: OrderIdProp) {
+export function FocusingOrderPage({orderId, setFocusOrderId, OrderActions}: FocusingOrderPageProp) {
   const [orderInfoData, setOrderInfoData] = useState<OrderInfo | null>(null);
 
   useEffect(() => { getOrderData(orderId, setOrderInfoData) }, []);
