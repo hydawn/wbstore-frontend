@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default function CustomerOrderActions({orderInfoData, onOrderChange}: OrderActionsProp) {
+export function CustomerOrderActions({orderInfoData, onOrderChange}: OrderActionsProp) {
   async function actOnOrder(action: string) {
     console.log(`${action} order ${orderInfoData.id}`)
     await axios.post(
@@ -30,12 +30,33 @@ export default function CustomerOrderActions({orderInfoData, onOrderChange}: Ord
   }
 
   function FinishOrder() {
-    return <button className="btn btn-success" onClick={() => {actOnOrder('finish')}}>确认收货</button>;
+    if (orderInfoData.status_taken)
+      return <button className="btn btn-success" onClick={() => {actOnOrder('finish')}}>确认收货</button>;
+    else
+      return <button className="btn btn-success" disabled>确认收货（商家未接受订单）</button>;
   }
 
+  if (orderInfoData.status_end === 'finished') {
+    return <>order finished</>
+  } else if (orderInfoData.status_end === 'cancelled') {
+    return <>order cancelled</>
+  }
   return <>
     <PayOrder />
     <CancelOrder />
     <FinishOrder />
   </>;
+}
+
+export async function getCustomerOrders(setOrderInfoDataList: Function, page_number: number, per_page: number) {
+  await axios.get(
+    '/api/search_customer_order',
+    {params: {page_number: page_number, per_page: per_page}}
+  ).then(resp => {
+    console.log('got orders', resp.data)
+    setOrderInfoDataList(resp.data.data as Array<OrderInfo>);
+  }).catch(resp => {
+    console.error('failed to get order:', resp)
+  });
+  return [];
 }
