@@ -11,3 +11,8 @@ interface OrderInfo {
   status_cancelling: boolean
   added_date: string
 }
+
+interface OrderActionsProp {
+  orderInfoData: OrderInfo
+  onOrderChange: Function
+}
