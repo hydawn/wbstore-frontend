@@ -47,7 +47,7 @@ export default function BookDetailPage({ bookId, setBookId, setOnPage, BookActio
   console.log('get book id', bookId);
   return (<>
     <BookDetailInfo bookId={bookId} />
-    bookData === null ? <LoadingPage /> : <BookActionSection bookData={bookData} setOnPage={setOnPage} />
+    {bookData === null ? <LoadingPage /> : <BookActionSection bookData={bookData} setOnPage={setOnPage} />}
     <ReturnButton />
   </>);
 }
