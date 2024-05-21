@@ -13,7 +13,7 @@ function SideBar({ onPage, setOnPage, sideBarNames }: Props) {
   console.log(`side bar sees: [${onPage}]`)
 
   return (
-  <>
+    <div className="d-flex flex-column vh-100 p-3 bg-light">
     {
     sideBarNames.map((name, index) => {
       return (
@@ -29,7 +29,7 @@ function SideBar({ onPage, setOnPage, sideBarNames }: Props) {
       );
     })
     }
-  </>
+  </div>
   );
 }
 

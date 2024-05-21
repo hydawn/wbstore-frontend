@@ -2,6 +2,8 @@ import { useState } from 'react';
 import SideBar from './SideBar.tsx';
 import UserMainPage from './customer/UserMainPage.tsx';
 import MerchMainPage from './merchpage/MerchMainPage.tsx';
+import { Container, Row, Col } from 'react-bootstrap';
+import './MainPage.css';
 
 interface Prop {
   loginStatus: boolean
@@ -21,16 +23,28 @@ function MainPage({loginStatus, loginRole, setLoginStatus}: Prop) {
   const userSideBarNames = ['home', 'books', 'shopping cart', 'orders'];
   const merchSideBarNames = ['home', 'books', 'add books', 'orders'];
   function UserPage() {
-    return (<>
-      <SideBar onPage={onPage} setOnPage={setOnPageStack} sideBarNames={userSideBarNames} />
-      <UserMainPage onPage={onPage} setOnPage={setOnPageStack} loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
-    </>);
+    return <Container fluid>
+      <Row>
+        <Col xs={2} id="sidebar-wrapper">
+          <SideBar onPage={onPage} setOnPage={setOnPageStack} sideBarNames={userSideBarNames} />
+        </Col>
+        <Col xs={10} id="main-content-wrapper">
+          <UserMainPage onPage={onPage} setOnPage={setOnPageStack} loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
+        </Col>
+      </Row>
+    </Container>;
   }
   function MerchPage() {
-    return (<>
-      <SideBar onPage={onPage} setOnPage={setOnPageStack} sideBarNames={merchSideBarNames} />
-      <MerchMainPage onPage={onPage} setOnPage={setOnPageStack} loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
-    </>);
+    return <Container fluid>
+      <Row>
+        <Col xs={2} id="sidebar-wrapper">
+          <SideBar onPage={onPage} setOnPage={setOnPageStack} sideBarNames={merchSideBarNames} />
+        </Col>
+        <Col xs={10} id="main-content-wrapper">
+          <MerchMainPage onPage={onPage} setOnPage={setOnPageStack} loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
+        </Col>
+      </Row>
+    </Container>;
   }
   console.log('got loginRole ' + loginRole)
   return (loginRole === 'merchant' ? <MerchPage /> : <UserPage />);

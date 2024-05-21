@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef  } from 'react';
 import { BookInfo } from '../types/BookTypes.tsx';
 import LoadingPage from '../LoadingPage.tsx';
 import BookLongView from '../views/BookLongView.tsx';
+import axios from 'axios';
 
 interface BookListPageProp {
   setBookId: Function,
@@ -38,12 +39,36 @@ function BookListRow({data, index, setBookId}: BookListRowProp) {
   </div>;
 }
 
+interface SearchBarProp {
+  setBookInfoList: Function
+}
+
+function SearchBar({setBookInfoList}: SearchBarProp) {
+  const searchNameRef = useRef<HTMLInputElement>(null);
+
+  async function searchBookInfo() {
+    await axios.get(
+      '/api/search_merchandise',
+      {params: {merchandise_name: searchNameRef.current?.value, per_page: 10, page_number: 1}}
+    ).then(resp => {
+      console.log('got:', resp);
+      setBookInfoList(resp.data.data as Array<BookInfo>);
+    }).catch(resp => {
+      console.error('error search_merchandise:', resp)
+    })
+  }
+
+  return <div className="input-group mb-3">
+    <input type="text" className="form-control" placeholder="商品名" aria-label="search name" aria-describedby="button-addon2" ref={searchNameRef} />
+    <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={() => {searchBookInfo()}}>搜索</button>
+  </div>;
+}
+
 export default function BookListPage({ setBookId, getBooks }: BookListPageProp) {
   const [bookInfoList, setBookInfoList] = useState<Array<BookInfo> | null>(null);
   const [bookPage, setBookPage] = useState(1);
 
   useEffect(() => {getBooks(setBookInfoList, bookPage, 10)}, []);
-
 
   interface Prop { bookInfoList: Array<BookInfo> }
 
@@ -63,6 +88,7 @@ export default function BookListPage({ setBookId, getBooks }: BookListPageProp) 
   function DrawBookStorePage({bookInfoList}: Prop) {
     return (
     <>
+    <SearchBar setBookInfoList={setBookInfoList} />
     <BookList bookInfoList={bookInfoList} />
     <BookListNavBar />
     </>
