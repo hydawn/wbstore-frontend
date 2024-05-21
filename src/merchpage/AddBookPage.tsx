@@ -76,7 +76,7 @@ function AddBookForm({onInsert}: AddBookFormProp) {
   </div>
   <div className="mb-3">
     <label htmlFor="inputPicture" className="form-label">商品主图片</label>
-    <input type="file" id="inputPicture" onChange={event => { handleFileChange(event, setImageString) }} />
+    <input type="file" className="form-control" id="inputPicture" onChange={event => { handleFileChange(event, setImageString) }} />
   </div>
   <div className="mb-3">
     <label htmlFor="inputDescription" className="form-label">商品介绍</label>
