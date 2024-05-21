@@ -15,13 +15,12 @@ interface PresentBookInfoProp {
 
 function PresentBookInfo({bookInfo, setBookId}: PresentBookInfoProp) {
   function MoreDetailButton() {
-    return <button className="btn" onClick={() => {
+    return <button className="btn btn-success" onClick={() => {
       setBookId(bookInfo.id);
     }}>更多</button>;
   }
   return (<>
-    <BookLongView bookInfo={bookInfo} />
-    <MoreDetailButton />
+    <BookLongView bookInfo={bookInfo} MoreDetailButton={MoreDetailButton} />
   </>);
 }
 
@@ -32,7 +31,11 @@ interface BookListRowProp {
 };
 
 function BookListRow({data, index, setBookId}: BookListRowProp) {
-  return <li key={index}><PresentBookInfo bookInfo={data} setBookId={setBookId} /></li>
+  return <div className="col-md-4" key={index}>
+      <div className="card mb-4">
+    <PresentBookInfo bookInfo={data} setBookId={setBookId} />
+    </div>
+  </div>;
 }
 
 export default function BookListPage({ setBookId, getBooks }: BookListPageProp) {
@@ -45,9 +48,9 @@ export default function BookListPage({ setBookId, getBooks }: BookListPageProp) 
   interface Prop { bookInfoList: Array<BookInfo> }
 
   function BookList({bookInfoList}: Prop) {
-    return (<ul>{
+    return (<div className="container mt-5"><div className="row">{
       bookInfoList.map((i, index) => ( <BookListRow data={i} index={index} setBookId={setBookId} /> ))
-    }</ul>);
+    }</div></div>);
   }
 
   function BookListNavBar() {
