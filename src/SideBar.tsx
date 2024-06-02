@@ -5,6 +5,14 @@ interface Props {
 }
 
 function SideBar({ onPage, setOnPage, sideBarNames }: Props) {
+  type stringStater = { [key: string]: string };
+  const nameMaps: stringStater = {
+    'home': '主页',
+    'books': '书籍',
+    'add books': '添加书籍',
+    'shopping cart': '购物车',
+    'orders': '订单'
+  };
 
   function handleClick(clickPage: string) {
     setOnPage(clickPage);
@@ -23,7 +31,7 @@ function SideBar({ onPage, setOnPage, sideBarNames }: Props) {
         type="button"
         className={'btn btn-primary' + (onPage === name && ' active')}
         onClick={() => handleClick(name)}>
-          {name}
+          {nameMaps[name]}
         </button>
       </div>
       );
