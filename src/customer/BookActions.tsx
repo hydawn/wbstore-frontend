@@ -64,7 +64,7 @@ function BookOrderForm({ bookData, setOnPage }: BookOrderFormProp) {
   </>);
 }
 
-function BookAddToShoppingCart({ bookData, setOnPage }: BookOrderFormProp) {
+function BookAddToShoppingCart({ bookData }: BookOrderFormProp) {
   const [disableButton, setDisableButton] = useState<boolean | null>(null);
 
   async function checkShoppingCart() {
@@ -105,7 +105,7 @@ function BookAddToShoppingCart({ bookData, setOnPage }: BookOrderFormProp) {
   }
 
   const handleAddedToCart = () => {
-    const handlePurchaseSuccess = (resp: AxiosResponse) => {
+    const handlePurchaseSuccess = (_: AxiosResponse) => {
       // set focus shopping cart
       //setOnPage('shopping cart');
       setDisableButton(true);
@@ -125,6 +125,6 @@ function BookAddToShoppingCart({ bookData, setOnPage }: BookOrderFormProp) {
 export default function BookActionsUser({ bookData, setOnPage }: BookOrderFormProp) {
   return <>
     <BookOrderForm bookData={bookData} setOnPage={setOnPage} />
-    <BookAddToShoppingCart bookData={bookData} setOnPage={setOnPage} />
+    <BookAddToShoppingCart bookData={bookData} setOnPage={setOnPage}  />
   </>;
 }

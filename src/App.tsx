@@ -36,7 +36,7 @@ function App() {
   if (loginStatus === null) {
     return <LoadingPage />;
   } else if (loginStatus) {
-    return <MainPage loginStatus={loginStatus} loginRole={loginRole} setLoginStatus={setLoginStatus} />;
+    return <MainPage loginRole={loginRole} setLoginStatus={setLoginStatus} />;
   } else {
     return <LoginSignupPage setLoginStatus={setLoginStatus} setLoginRole={setLoginRole} />;
   }

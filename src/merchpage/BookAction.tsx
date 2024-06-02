@@ -9,7 +9,7 @@ interface Prop {
 function removeBook(bookData: BookInfo, onRemove: Function) {
   console.log(`removing book ${bookData.name} of id [${bookData.id}]`);
   // TODO: remove book here
-  axios.post('/api/remove_book', {id: bookData.id}).then(resp => {onRemove()});
+  axios.post('/api/remove_book', {id: bookData.id}).then((_) => {onRemove()});
 }
 
 // for merchant

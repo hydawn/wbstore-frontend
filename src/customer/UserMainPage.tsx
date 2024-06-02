@@ -6,11 +6,10 @@ import ShoppingCartPage from './ShoppingCartPage.tsx'
 interface Props {
   onPage: string,
   setOnPage: Function,
-  loginStatus: boolean,
   setLoginStatus: Function,
 }
 
-function UserMainPage({ onPage, setOnPage, loginStatus, setLoginStatus }: Props) {
+function UserMainPage({ onPage, setOnPage, setLoginStatus }: Props) {
   return (
   <>
     {onPage === 'home' ? <UserHomePage setLoginStatus={setLoginStatus} /> : null}

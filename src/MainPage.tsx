@@ -6,12 +6,11 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './MainPage.css';
 
 interface Prop {
-  loginStatus: boolean
   loginRole: string
   setLoginStatus: Function
 };
 
-function MainPage({loginStatus, loginRole, setLoginStatus}: Prop) {
+function MainPage({loginRole, setLoginStatus}: Prop) {
   const [onPage, setOnPageRaw] = useState('home');
 
   let pageStack: string[] = [];
@@ -29,7 +28,7 @@ function MainPage({loginStatus, loginRole, setLoginStatus}: Prop) {
           <SideBar onPage={onPage} setOnPage={setOnPageStack} sideBarNames={userSideBarNames} />
         </Col>
         <Col xs={10} id="main-content-wrapper">
-          <UserMainPage onPage={onPage} setOnPage={setOnPageStack} loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
+          <UserMainPage onPage={onPage} setOnPage={setOnPageStack} setLoginStatus={setLoginStatus} />
         </Col>
       </Row>
     </Container>;
@@ -41,7 +40,7 @@ function MainPage({loginStatus, loginRole, setLoginStatus}: Prop) {
           <SideBar onPage={onPage} setOnPage={setOnPageStack} sideBarNames={merchSideBarNames} />
         </Col>
         <Col xs={10} id="main-content-wrapper">
-          <MerchMainPage onPage={onPage} setOnPage={setOnPageStack} loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
+          <MerchMainPage onPage={onPage} setOnPage={setOnPageStack} setLoginStatus={setLoginStatus} />
         </Col>
       </Row>
     </Container>;
