@@ -1,17 +1,51 @@
 import {useEffect, useState} from "react"
 import LoadingPage from "../LoadingPage";
 import axios, {AxiosResponse} from "axios";
+import { BookInfo } from "../types/BookTypes";
 
 interface ShoppingCartPageProp {
   setOnPage: Function
 }
 
-interface Prop {
+interface Props {
   cartItem: OrderInfo
+  OrderActions: () => JSX.Element
 }
 
-function ShoppingCartListPresent({cartItem}: Prop) {
-  return <>cart id is {cartItem.id}</>
+function ShoppingCartListPresent({cartItem, OrderActions}: Props) {
+  const [bookData, setBookData] = useState<BookInfo | null>(null);
+
+  useEffect(() => {
+    console.log(`try /api/get_merchandise detail ${cartItem.merchandise_id}`)
+    axios.get(
+      '/api/get_merchandise',
+      {params: {merchandise_id: cartItem.merchandise_id} }
+    ).then((resp) => {
+      console.log('get /api/get_merchandise detail')
+      setBookData(resp.data.data as BookInfo);
+    }).catch((resp) => {
+      console.error('/api/get_merchandise error:', resp)
+    })
+  }, []);
+
+  if (bookData === null)
+    return <></>;
+  const base64Image = `data:${bookData.image_type};base64,${bookData.image_description}`;
+  return <div className="card" style={{width: '22rem'}}>
+    <img src={base64Image} className="card-img-top" alt={bookData.name} />
+    <div className="card-body">
+      <h5 className="card-title">{bookData.name}</h5>
+      <p className="card-text">用户{cartItem.username}创立的购物车</p>
+    </div>
+    <ul className="list-group list-group-flush">
+      <li className="list-group-item">数量：{cartItem.count}</li>
+      <li className="list-group-item">总价格：{cartItem.total_price}</li>
+      <li className="list-group-item">加入购物车日期：{cartItem.added_date.split('.')[0].replace('T', ' ')}</li>
+    </ul>
+    <div className="card-body">
+      <OrderActions />
+    </div>
+  </div>
 }
 
 interface ShoppingCartControlsProp {
@@ -78,10 +112,9 @@ export default function ShoppingCartPage({setOnPage}: ShoppingCartPageProp) {
     if (cartList === null)
       return <LoadingPage />;
     else {
-      return <>{cartList.map((item, key) => (
-        <li key={key}>
-          <ShoppingCartListPresent cartItem={item} />
-          <ShoppingCartControls
+      return <>{cartList.map((item, index) => {
+        function LocalActions() {
+          return <ShoppingCartControls
             cartItem={item}
             reloadPage={() => {getCartList()}}
             pageToOrders={(orderId: string) => {
@@ -89,8 +122,9 @@ export default function ShoppingCartPage({setOnPage}: ShoppingCartPageProp) {
               setOnPage('orders');
             }}
           />
-        </li>
-      ))}</>;
+        }
+        return <div key={index}><ShoppingCartListPresent cartItem={item} OrderActions={LocalActions} /></div>;
+      })}</>;
     }
   }
 
@@ -100,10 +134,8 @@ export default function ShoppingCartPage({setOnPage}: ShoppingCartPageProp) {
     return <LoadingPage />
   else {
     return <>
-      <ul>
-      <button className="btn btn-success" disabled>total: {ordersCount}</button>
+      <button className="btn btn-success" disabled>购物车：{ordersCount}件</button>
       <ShoppingCartList />
-      </ul>
     </>;
   }
 }

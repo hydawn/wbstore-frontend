@@ -32,7 +32,7 @@ export default function BookDetailPage({ bookId, setBookId, setOnPage, BookActio
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">商家：{bookData.added_by_user}</li>
-          <li className="list-group-item">上市时间：{bookData.online_date.split('.')[0]}</li>
+          <li className="list-group-item">上市时间：{bookData.online_date.split('.')[0].replace('T', ' ')}</li>
           <li className="list-group-item">价格：{bookData.price}</li>
           <li className="list-group-item">存货：{bookData.stock_inventory}</li>
         </ul>
