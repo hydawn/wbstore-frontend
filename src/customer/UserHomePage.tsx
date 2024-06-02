@@ -29,7 +29,7 @@ function UserHomePage({setLoginStatus}: Props) {
 
   return (
     <>
-      <h1>用户名：{userName}</h1>
+      <h1>用户界面：{userName}</h1>
       <LogoutButton setLoginStatus={setLoginStatus} />
     </>
   );
