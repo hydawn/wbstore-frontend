@@ -45,7 +45,6 @@ function MainPage({loginRole, setLoginStatus}: Prop) {
       </Row>
     </Container>;
   }
-  console.log('got loginRole ' + loginRole)
   return (loginRole === 'merchant' ? <MerchPage /> : <UserPage />);
 }
 

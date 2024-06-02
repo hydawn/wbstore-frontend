@@ -9,7 +9,7 @@ export function getAllBooks(setBookInfoList: Function, page_number: number, per_
     { params: {merchandise_name: '.*', per_page: per_page, page_number: page_number} }
   ).then(resp => {
     console.log(`got ${endpoint}: `, resp);
-    setBookInfoList(resp.data.data as Array<BookInfo>);
+    setBookInfoList(resp.data.data.data_list as Array<BookInfo>);
   }).catch(resp => {
     console.error(`${endpoint} error:`, resp)
   })
