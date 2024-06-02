@@ -14,17 +14,34 @@ interface Prop {
   }) => JSX.Element
 }
 
-interface BookDetailInfoProp {
-  bookId: string
-}
-
 // show the detailed info
-function BookDetailInfo({bookId}: BookDetailInfoProp) {
-  return <> this is a more detail page for book with bookid of [{bookId}] </>;
-}
-
 export default function BookDetailPage({ bookId, setBookId, setOnPage, BookActionSection }: Prop) {
   const [bookData, setBookData] = useState<BookInfo | null>(null);
+
+  function BookDetailInfo() {
+    if (bookData === null)
+      return <LoadingPage /> ;
+    const base64Image = `data:${bookData.image_type};base64,${bookData.image_description}`;
+    return <>
+      <h1>{bookData.name}</h1>
+      <div className="card" style={{ width: '32rem'}}>
+        <img src={base64Image} className="card-img-top" alt={bookData.name} />
+        <div className="card-body">
+          <h5 className="card-title">{bookData.name}</h5>
+          <p className="card-text">{bookData.text_description}</p>
+        </div>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">商家：{bookData.added_by_user}</li>
+          <li className="list-group-item">上市时间：{bookData.online_date.split('.')[0]}</li>
+          <li className="list-group-item">价格：{bookData.price}</li>
+          <li className="list-group-item">存货：{bookData.stock_inventory}</li>
+        </ul>
+        <div className="card-body">
+          <BookActionSection bookData={bookData} setOnPage={setOnPage} />
+        </div>
+      </div>
+    </>
+  }
 
   // get data from backend
   useEffect(() => {
@@ -46,8 +63,7 @@ export default function BookDetailPage({ bookId, setBookId, setOnPage, BookActio
 
   console.log('get book id', bookId);
   return (<>
-    <BookDetailInfo bookId={bookId} />
-    {bookData === null ? <LoadingPage /> : <BookActionSection bookData={bookData} setOnPage={setOnPage} />}
+    {bookData === null ? <LoadingPage /> : <BookDetailInfo />}
     <ReturnButton />
   </>);
 }
