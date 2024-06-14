@@ -49,7 +49,7 @@ function OrderInfoDisplay({orderInfoData, OrderActions}: OrderInfoDisplayProp) {
       <li className="list-group-item">{orderInfoData.status_paid ? '已付款' : '未付款'}</li>
       <li className="list-group-item">{orderInfoData.status_taken ? '已接单' : '商家未接单'}</li>
       {orderInfoData.status_cancelling ? <li className="list-group-item">取消中</li> : <></>}
-      {orderInfoData.status_end ? <li className="list-group-item">订单已结束</li> : <></>}
+      {orderInfoData.status_end === 'running' ? <li className="list-group-item">订单已结束</li> : <></>}
       <li className="list-group-item">下单日期{orderInfoData.added_date.split('.')[0].replace('T', ' ')}</li>
     </ul>
     <div className="card-body">
